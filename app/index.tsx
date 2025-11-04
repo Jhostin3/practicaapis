@@ -43,11 +43,11 @@ const Index = () => {
 
   useEffect(() => {
     if (animeData?.description) {
-      setTranslatedDescription('Translating...');
+      setTranslatedDescription('Traduciendo...');
       translate(animeData.description, { to: 'es' }).then(text => {
         setTranslatedDescription(text);
       }).catch(err => {
-        console.error('Translation error:', err);
+        console.error('Error de traducción:', err);
         setTranslatedDescription(animeData.description); // fallback to original
       });
     }
@@ -115,11 +115,11 @@ const Index = () => {
         if (data.Media) {
           setAnimeData(data.Media);
         } else {
-          setError('Anime not found. Please try another search.');
+          setError('Anime no encontrado. Por favor, intenta otra búsqueda.');
         }
       } catch (error) {
-        console.error('Error fetching anime data:', error);
-        setError('An error occurred while fetching data. Please try again.');
+        console.error('Error al obtener los datos del anime:', error);
+        setError('Ocurrió un error al obtener los datos. Por favor, inténtalo de nuevo.');
       } finally {
         setLoading(false);
       }
@@ -129,7 +129,7 @@ const Index = () => {
   return (
     <View className="flex-1 bg-zinc-900">
         <View className="p-4 pt-12">
-            <Text className="text-white text-4xl font-extrabold mb-4 text-center tracking-tight">Anime Hub</Text>
+            <Text className="text-white text-4xl font-extrabold mb-4 text-center tracking-tight">AniFinder</Text>
             <SearchBar onSearch={handleSearch} />
         </View>
       
@@ -175,12 +175,12 @@ const Index = () => {
                 
                 {animeData.trailer && animeData.trailer.site === 'youtube' && (
                     <View className="mt-6">
-                        <Text className="text-xl font-bold text-white border-b-2 border-zinc-700 pb-2 mb-4">Trailer</Text>
+                        <Text className="text-xl font-bold text-white border-b-2 border-zinc-700 pb-2 mb-4">Tráiler</Text>
                         {Platform.OS === 'web' ? (
                         <TouchableOpacity 
                             className="bg-red-600 rounded-lg items-center justify-center h-12"
                             onPress={() => Linking.openURL(`https://www.youtube.com/watch?v=${animeData.trailer.id}`)} >
-                            <Text className="text-white font-bold text-base">Watch Trailer</Text>
+                            <Text className="text-white font-bold text-base">Ver Tráiler</Text>
                         </TouchableOpacity>
                         ) : (
                         <View className="aspect-video w-full rounded-lg overflow-hidden">
@@ -197,7 +197,7 @@ const Index = () => {
 
                 {animeData.characters && animeData.characters.nodes.length > 0 && (
                     <View className="w-full mt-6">
-                    <Text className="text-xl font-bold text-white border-b-2 border-zinc-700 pb-2 mb-4">Characters</Text>
+                    <Text className="text-xl font-bold text-white border-b-2 border-zinc-700 pb-2 mb-4">Personajes</Text>
                     <ScrollView horizontal showsHorizontalScrollIndicator={false} className="-mx-2 px-2">
                         {animeData.characters.nodes.map(character => (
                         <View key={character.id} className="items-center mr-3 w-32">
