@@ -1,22 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Image, ActivityIndicator, Text, TouchableOpacity } from 'react-native';
 import SearchBar from '../components/SearchBar';
 import StarRating from '../components/StarRating';
+import translate from 'translate';
 
 interface AnimeData {
   coverImage: {
     large: string;
   };
   title: {
-    romaji: string;
+    romaji:string;
   };
   averageScore: number;
+  description: string;
 }
 
 const Index = () => {
   const [animeData, setAnimeData] = useState<AnimeData | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [translatedDescription, setTranslatedDescription] = useState("");
+
+  useEffect(() => {
+    if (animeData?.description) {
+      setTranslatedDescription('Translating...');
+      translate(animeData.description, { to: 'es' }).then(text => {
+        setTranslatedDescription(text);
+      }).catch(err => {
+        console.error('Translation error:', err);
+        setTranslatedDescription(animeData.description); // fallback to original
+      });
+    }
+  }, [animeData]);
 
   const handleSearch = async (searchQuery: string) => {
     if (searchQuery.trim().length > 0) {
@@ -35,6 +50,7 @@ const Index = () => {
               large
             }
             averageScore
+            description(asHtml: false)
           }
         }
       `;
@@ -92,6 +108,7 @@ const Index = () => {
               <Text className="text-white text-2xl">♥</Text>
             </TouchableOpacity>
           </View>
+          <Text className="text-sm mt-4 text-justify">{translatedDescription.replace(/<br>/g, '\n').replace(/<[^>]*>?/gm, '')}</Text>
         </View>
       )}
     </View>
