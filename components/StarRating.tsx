@@ -13,11 +13,11 @@ const StarRating: React.FC<StarRatingProps> = ({ rating }) => {
   return (
     <View className="flex-row items-center">
       {[...Array(fullStars)].map((_, i) => (
-        <Text key={`full_${i}`} className="text-yellow-400 text-2xl">★</Text>
+        <Text key={`full_${i}`} className="text-amber-400 text-2xl">★</Text>
       ))}
-      {halfStar && <Text className="text-yellow-400 text-2xl">✫</Text>}
+      {halfStar && <Text className="text-amber-400 text-2xl">✫</Text>}
       {[...Array(emptyStars)].map((_, i) => (
-        <Text key={`empty_${i}`} className="text-gray-300 text-2xl">☆</Text>
+        <Text key={`empty_${i}`} className="text-zinc-600 text-2xl">☆</Text>
       ))}
     </View>
   );
