@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Image, ActivityIndicator, Text } from 'react-native';
 import SearchBar from '../components/SearchBar';
+import StarRating from '../components/StarRating';
 
 interface AnimeData {
   coverImage: {
@@ -9,6 +10,7 @@ interface AnimeData {
   title: {
     romaji: string;
   };
+  averageScore: number;
 }
 
 const Index = () => {
@@ -32,6 +34,7 @@ const Index = () => {
             coverImage {
               large
             }
+            averageScore
           }
         }
       `;
@@ -80,6 +83,7 @@ const Index = () => {
             className="w-64 h-96 rounded-lg"
           />
           <Text className="text-lg font-bold mt-2 text-center">{animeData.title.romaji}</Text>
+          <StarRating rating={animeData.averageScore / 20} />
         </View>
       )}
     </View>
