@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Image, ActivityIndicator, Text } from 'react-native';
+import { View, Image, ActivityIndicator, Text, TouchableOpacity } from 'react-native';
 import SearchBar from '../components/SearchBar';
 import StarRating from '../components/StarRating';
 
@@ -84,6 +84,14 @@ const Index = () => {
           />
           <Text className="text-lg font-bold mt-2 text-center">{animeData.title.romaji}</Text>
           <StarRating rating={animeData.averageScore / 20} />
+          <View className="flex-row mt-4 space-x-2">
+            <TouchableOpacity className="bg-sky-500 rounded-md items-center justify-center">
+              <Text className="text-white font-bold px-10 py-3">Add to List</Text>
+            </TouchableOpacity>
+            <TouchableOpacity className="p-3 bg-red-500 rounded-md items-center justify-center">
+              <Text className="text-white text-2xl">♥</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       )}
     </View>
