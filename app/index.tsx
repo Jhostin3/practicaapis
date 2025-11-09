@@ -6,7 +6,8 @@ import StarRating from '../components/StarRating';
 import translate from 'translate';
 import { WebView } from 'react-native-webview';
 import Chatbot from '../components/Chatbot';
-import AIRecommender from '../components/AIRecommender'; // Importamos el nuevo componente
+import AIRecommender from '../components/AIRecommender';
+import WatchButton from '../components/WatchButton'; // Importamos el nuevo botón
 
 interface AnimeData {
   coverImage: {
@@ -179,17 +180,18 @@ const Index = () => {
                         <Text className="text-zinc-300 mt-4 text-base leading-relaxed text-justify">{translatedDescription.replace(/<br>/g, '\n').replace(/<[^>]*>?/gm, '')}</Text>
                     </View>
                     
-                    {animeData.trailer && animeData.trailer.site === 'youtube' && (
-                        <View className="mt-6">
-                            <Text className="text-xl font-bold text-white border-b-2 border-zinc-700 pb-2 mb-4">Tráiler</Text>
-                            {Platform.OS === 'web' ? (
+                    <View className="mt-6">
+                        <Text className="text-xl font-bold text-white border-b-2 border-zinc-700 pb-2 mb-4">Contenido</Text>
+                        <WatchButton animeTitle={animeData.title.romaji} />
+                        {animeData.trailer && animeData.trailer.site === 'youtube' && (
+                            Platform.OS === 'web' ? (
                             <TouchableOpacity 
-                                className="bg-red-600 rounded-lg items-center justify-center h-12"
+                                className="bg-red-600 rounded-lg items-center justify-center h-12 mt-3"
                                 onPress={() => Linking.openURL(`https://www.youtube.com/watch?v=${animeData.trailer.id}`)} >
                                 <Text className="text-white font-bold text-base">Ver Tráiler</Text>
                             </TouchableOpacity>
                             ) : (
-                            <View className="aspect-video w-full rounded-lg overflow-hidden">
+                            <View className="aspect-video w-full rounded-lg overflow-hidden mt-3">
                                 <WebView
                                 style={{ flex: 1 }}
                                 javaScriptEnabled={true}
@@ -197,9 +199,9 @@ const Index = () => {
                                 source={{ uri: `https://www.youtube.com/embed/${animeData.trailer.id}` }}
                                 />
                             </View>
-                            )}
-                        </View>
-                    )}
+                            )
+                        )}
+                    </View>
 
                     {animeData.characters && animeData.characters.nodes.length > 0 && (
                         <View className="w-full mt-6">
@@ -215,7 +217,6 @@ const Index = () => {
                         </View>
                     )}
                     
-                    {/* AÑADIMOS EL COMPONENTE DE RECOMENDACIONES AQUÍ */}
                     <AIRecommender animeData={animeData} />
 
                 </View>
